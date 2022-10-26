@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\ReportService.Data\ReportService.Data\ReportService.Data.csproj" />
+    <ProjectReference Include="..\..\ReportService.Entity\ReportService.Entity\ReportService.Entity.csproj" />
+  </ItemGroup>
+
 </Project>
