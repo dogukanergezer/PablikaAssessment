@@ -5,16 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ContactService.Data.Migrations
 {
-    public partial class initial_create_contactServiceDb : Migration
+    public partial class init_contactDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "public");
-
             migrationBuilder.CreateTable(
-                name: "User",
-                schema: "public",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -24,12 +20,11 @@ namespace ContactService.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Contact",
-                schema: "public",
+                name: "Contacts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -40,32 +35,28 @@ namespace ContactService.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contact", x => x.Id);
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Contact_User_UserId",
+                        name: "FK_Contacts_Users_UserId",
                         column: x => x.UserId,
-                        principalSchema: "public",
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contact_UserId",
-                schema: "public",
-                table: "Contact",
+                name: "IX_Contacts_UserId",
+                table: "Contacts",
                 column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Contact",
-                schema: "public");
+                name: "Contacts");
 
             migrationBuilder.DropTable(
-                name: "User",
-                schema: "public");
+                name: "Users");
         }
     }
 }

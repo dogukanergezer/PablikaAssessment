@@ -43,14 +43,14 @@ namespace ReportService.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("RequestedDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("status")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Report", "public");
+                    b.ToTable("Reports");
                 });
 #pragma warning restore 612, 618
         }

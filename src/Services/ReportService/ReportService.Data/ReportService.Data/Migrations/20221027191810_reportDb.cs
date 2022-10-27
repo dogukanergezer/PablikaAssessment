@@ -5,16 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ReportService.Data.Migrations
 {
-    public partial class initial_create_reportServiceDb : Migration
+    public partial class reportDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "public");
-
             migrationBuilder.CreateTable(
-                name: "Report",
-                schema: "public",
+                name: "Reports",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -22,20 +18,19 @@ namespace ReportService.Data.Migrations
                     Location = table.Column<string>(type: "text", nullable: false),
                     PersonCount = table.Column<int>(type: "integer", nullable: false),
                     PhoneCount = table.Column<int>(type: "integer", nullable: false),
-                    RequestedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RequestedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Report", x => x.Id);
+                    table.PrimaryKey("PK_Reports", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Report",
-                schema: "public");
+                name: "Reports");
         }
     }
 }

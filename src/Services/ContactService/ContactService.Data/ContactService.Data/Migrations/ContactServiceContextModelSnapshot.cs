@@ -47,7 +47,7 @@ namespace ContactService.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Contact", "public");
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("ContactService.Entity.Entities.User", b =>
@@ -70,7 +70,7 @@ namespace ContactService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", "public");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ContactService.Entity.Entities.Contact", b =>

@@ -5,18 +5,21 @@ namespace ContactService.Data.Contexts
 {
     public class ContactServiceContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Contact> Contacts { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ContactServiceContext()
         {
-            optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=PablikaContactServiceDb;Integrated Security=true; User Id=postgres;Password=0000;");
         }
 
+        public ContactServiceContext(DbContextOptions<ContactServiceContext> options) : base(options) { }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("User", "public");
-            modelBuilder.Entity<Contact>().ToTable("Contact", "public");
+            base.OnModelCreating(modelBuilder); 
         }
     }
 }
