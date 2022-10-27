@@ -10,7 +10,7 @@ namespace ReportService.Api.Controllers
     [ApiController]
     public class ReportController : ControllerBase
     {
-        IReportService _reportService;
+        private readonly IReportService _reportService;
         public ReportController(IReportService reportService)
         {
             _reportService = reportService;
@@ -21,8 +21,7 @@ namespace ReportService.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewReport(ReportDto reportDto)
         {
-            Guid Id = Guid.NewGuid();
-            reportDto.Id = Id;
+            reportDto.Id = Guid.NewGuid(); 
             reportDto.ReportName = reportDto.ReportName;
             reportDto.RequestedDate = DateTime.Now;
             reportDto.Location = reportDto.Location;
@@ -38,11 +37,8 @@ namespace ReportService.Api.Controllers
         }
 
         [HttpGet]
-        public List<ReportDto> GetReports()
-        {
-            List<ReportDto> reports = _reportService.GetReports();
-            return reports;
-        }
+        public List<ReportDto> GetReports() => _reportService.GetReports();
+
 
         [HttpDelete]
         public void DeleteReport(ReportDto reportDto)

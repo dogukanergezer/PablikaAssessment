@@ -29,27 +29,14 @@ namespace ContactService.Data.Repositories.Concrete.EntityFramework
         }
         public void DeleteContact(Contact contact)
         {
-            try
-            {
                 _contactContext.Contacts.Remove(contact);
-            }
-            catch
-            {
-
-            }
 
         }
-        public List<Contact> GetAllContacts()
-        {
-            return _contactContext.Contacts.ToList();
-        }
+        public List<Contact> GetAllContacts() => _contactContext.Contacts.ToList();
 
 
-        public List<Contact> GetAllContactsById(Guid userId)
-        {
-            return _contactContext.Contacts.ToList();
-        }
-
+        public List<Contact> GetAllContactsById(Guid userId) => _contactContext.Contacts.ToList();
+  
 
         public List<int> PersonPhoneCount(string address)
         {
