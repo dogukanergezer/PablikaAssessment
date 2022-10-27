@@ -28,3 +28,20 @@ $ git clone https://github.com/dogukanergezer/PablikaAssessment.git
 **You will be redirected to the following addresses via ocelot**:
 - http://localhost:5001/api/contact 
 - http://localhost:5002/api/report
+
+### To make it services run:
+1 - Go to **appsetting.json** file, then enter your own server information in the **ConnectionStrings** field.
+
+2 - Delete the migrations folder 
+
+3 - Set **ContactService.Api** as the startup project.
+
+3 - Go to **ContactService.Api** directory on command line
+```
+$ dotnet migrations add init_contactDB --startup-project ./ --project ../ContactService.Data/
+```
+ **Next**
+```
+$ dotnet ef database update --startup-project ./ --project ../ContactService.Data/
+```
+You can also run the commands for report service and try again..
