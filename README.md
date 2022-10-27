@@ -1,4 +1,4 @@
-# PablikaAssessment Backend (.NET) Assessment
+# Pablika Backend (.NET) Assessment
 
 A telephone directory application with two microservices communicating with each other. In this application, you can add or remove people to the directory, add more than one contact information to the user, and also create a report that brings the number of people and phones by location.
 
