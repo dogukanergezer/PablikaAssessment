@@ -1,5 +1,8 @@
 using ContactService.Business;
+using ContactService.Data;
+using ContactService.Data.Contexts;
 using ContactService.Entity.AutoMapper.Profiles;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddBusinessServices();
+builder.Services.AddDatabaseServices();
 builder.Services.AddAutoMapper(typeof(ContactProfile), typeof(UserProfile));
+builder.Services.AddEntityFrameworkNpgsql().AddDbContext<ContactServiceContext>(opt =>
+        opt.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

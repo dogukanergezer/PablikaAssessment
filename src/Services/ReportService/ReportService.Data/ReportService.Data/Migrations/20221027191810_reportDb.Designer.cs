@@ -12,8 +12,8 @@ using ReportService.Data.Contexts;
 namespace ReportService.Data.Migrations
 {
     [DbContext(typeof(ReportServiceContext))]
-    [Migration("20221026110906_initial_create_reportServiceDb")]
-    partial class initial_create_reportServiceDb
+    [Migration("20221027191810_reportDb")]
+    partial class reportDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,14 +45,14 @@ namespace ReportService.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("RequestedDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("status")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Report", "public");
+                    b.ToTable("Reports");
                 });
 #pragma warning restore 612, 618
         }

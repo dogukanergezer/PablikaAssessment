@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ReportService.Business.Abstract;
 using ReportService.Data.Contexts;
+using ReportService.Data.Repositories.Abstract;
 using ReportService.Data.Repositories.Concrete.EntityFramework;
 using ReportService.Entity.DTOs;
 using ReportService.Entity.Entities;
@@ -10,24 +11,23 @@ namespace ReportService.Business.Concrete
     public class ReportManager : IReportService
     {
         private readonly IMapper _mapper;
-
-        public ReportManager(IMapper mapper)
+        private readonly IReportRepository _reportRepository;
+        public ReportManager(IMapper mapper, IReportRepository reportRepository)
         {
             _mapper = mapper;
+            _reportRepository = reportRepository;
         }
-
-        ReportRepository reportRepository = new ReportRepository(new ReportServiceContext());
 
 
         public void AddReport(ReportDto reportDto)
         {
             var report = _mapper.Map<Report>(reportDto);
-            reportRepository.AddReport(report);
+            _reportRepository.AddReport(report);
         }
 
         public List<ReportDto> GetReports()
         {
-            List<Report> reports = reportRepository.GetReports();
+            List<Report> reports = _reportRepository.GetReports();
 
             List<ReportDto> reportDtos = new List<ReportDto>();
 
@@ -53,8 +53,8 @@ namespace ReportService.Business.Concrete
 
         public void DeleteReport(Guid Id)
         {
-            Report report = reportRepository.GetReportById(Id);
-            reportRepository.DeleteReport(report);
+            Report report = _reportRepository.GetReportById(Id);
+            _reportRepository.DeleteReport(report);
         }
 
     }

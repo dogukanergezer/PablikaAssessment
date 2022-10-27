@@ -6,14 +6,20 @@ namespace ReportService.Data.Contexts
     public class ReportServiceContext:DbContext
     {
         public DbSet<Report> Reports { get; set; }
+
+        public ReportServiceContext(DbContextOptions<ReportServiceContext> options) : base(options) { }
+
+        public ReportServiceContext()
+        {
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=PablikaReportServiceDb;Integrated Security=true; User Id=postgres;Password=0000;");
+            base.OnConfiguring(optionsBuilder); 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Report>().ToTable("Report", "public");
+            base.OnModelCreating(modelBuilder); 
         }
     }
 }

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ContactService.Data.Migrations
 {
     [DbContext(typeof(ContactServiceContext))]
-    [Migration("20221026110744_initial_create_contactServiceDb")]
-    partial class initial_create_contactServiceDb
+    [Migration("20221027195335_init_contactDb")]
+    partial class init_contactDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,7 +49,7 @@ namespace ContactService.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Contact", "public");
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("ContactService.Entity.Entities.User", b =>
@@ -72,7 +72,7 @@ namespace ContactService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", "public");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ContactService.Entity.Entities.Contact", b =>

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using ContactService.Business.Abstract;
-using ContactService.Data.Contexts;
-using ContactService.Data.UnitOfWork;
+using ContactService.Data.Abstract;
 using ContactService.Entity.DTOs;
 using ContactService.Entity.Entities;
 
@@ -9,31 +8,31 @@ namespace ContactService.Business.Concrete
 {
     public class ContactManager : IContactService
     {
-        UnitOfWork uow = new UnitOfWork(new ContactServiceContext());
+        private readonly IContactRepository _contactRepository;
         private readonly IMapper _mapper;
 
-        public ContactManager(IMapper mapper)
+        public ContactManager(IMapper mapper, IContactRepository contactRepository)
         {
             _mapper = mapper;
+            _contactRepository = contactRepository;
         }
-       
+
         public void AddContact(ContactDto contactDto)
         {
             var contact = _mapper.Map<Contact>(contactDto);
-            uow.ContactRepository.AddContact(contact);
-            uow.Save();
+            _contactRepository.AddContact(contact);
         }
 
         public ContactDto GetContactByUserId(Guid userId)
         {
-            var contactDto = _mapper.Map<ContactDto>(uow.ContactRepository.GetContactByUserId(userId));
+            var contactDto = _mapper.Map<ContactDto>(_contactRepository.GetContactByUserId(userId));
             return contactDto;
 
         }
 
         public List<ContactDto> GetAllContactsById(Guid userId)
         {
-            List<ContactDto> contacts = uow.ContactRepository.GetAllContactsById(userId).Where(x => x.UserId == userId).Select(y => new ContactDto
+            List<ContactDto> contacts = _contactRepository.GetAllContactsById(userId).Where(x => x.UserId == userId).Select(y => new ContactDto
             {
 
                 Id = y.Id,
@@ -51,20 +50,18 @@ namespace ContactService.Business.Concrete
 
         public void DeleteContact(Guid contactId)
         {
-            Contact contact = uow.ContactRepository.GetContactById(contactId);
-            uow.ContactRepository.DeleteContact(contact);
-            uow.Save();
+            Contact contact = _contactRepository.GetContactById(contactId);
+            _contactRepository.DeleteContact(contact);
         }
         public void DeleteContactByUserId(Guid userId)
         {
-            Contact contact = uow.ContactRepository.GetContactByUserId(userId);
-            uow.ContactRepository.DeleteContact(contact);
-            uow.Save();
+            Contact contact = _contactRepository.GetContactByUserId(userId);
+            _contactRepository.DeleteContact(contact);
         }
 
         public List<int> PersonPhoneCount(string address)
         {
-            return uow.ContactRepository.PersonPhoneCount(address);
+            return _contactRepository.PersonPhoneCount(address);
         }
 
     }

@@ -15,7 +15,8 @@ namespace ContactService.Data.Repositories.Concrete.EntityFramework
 
         public void AddContact(Contact contact)
         {
-            _context.Contacts.Add(contact);
+            _contactContext.Contacts.Add(contact);
+            _contactContext.SaveChanges();
         }
         public Contact GetContactByUserId(Guid userId)
         {
@@ -29,7 +30,8 @@ namespace ContactService.Data.Repositories.Concrete.EntityFramework
         }
         public void DeleteContact(Contact contact)
         {
-                _contactContext.Contacts.Remove(contact);
+            _contactContext.Contacts.Remove(contact);
+            _contactContext.SaveChanges();
 
         }
         public List<Contact> GetAllContacts() => _contactContext.Contacts.ToList();
