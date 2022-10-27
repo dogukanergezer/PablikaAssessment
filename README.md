@@ -7,10 +7,11 @@ The project can be downloaded using the command:
 $ git clone https://github.com/dogukanergezer/PablikaAssessment.git
 ```
 ### Then make sure the following are chosen as startup projects:
-**EventBus.ConsumerConsole**
-**WebApiGateway**
-**ContactService.Api**
-**ReportService.Api**
+
+- **EventBus.ConsumerConsole**
+- **WebApiGateway**
+- **ContactService.Api**
+- **ReportService.Api**
 
 ### Used technologies and tools
 - C#, .NET Core, Automapper
@@ -23,6 +24,7 @@ $ git clone https://github.com/dogukanergezer/PablikaAssessment.git
 **When making an external request, send a request to the addresses below**:
 - http://localhost:5000/contact 
 - http://localhost:5000/report
+
 **You will be redirected to the following addresses via ocelot**:
 - http://localhost:5001/api/contact 
 - http://localhost:5002/api/report
