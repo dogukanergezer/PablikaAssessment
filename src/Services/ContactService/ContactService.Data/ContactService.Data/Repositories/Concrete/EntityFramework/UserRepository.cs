@@ -24,16 +24,11 @@ namespace ContactService.Data.Repositories.Concrete.EntityFramework
             _contactContext.Users.Remove(user);
         }
 
-        public User GetUserByUserId(Guid userId)
-        {
-            return _contactContext.Users.Where(x => x.Id == userId).FirstOrDefault();
-        }
+        public User GetUserByUserId(Guid userId) => _contactContext.Users.Where(x => x.Id == userId).FirstOrDefault();
 
-        public List<User> GetAllUsers()
-        {
-            return _contactContext.Users.ToList();
-        }
 
+        public List<User> GetAllUsers() => _contactContext.Users.ToList();
+   
 
     }
 }

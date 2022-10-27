@@ -8,8 +8,8 @@ namespace ContactService.Api.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
-        IUserService _userService;
-        IContactService _contactService;
+        private readonly IUserService _userService;
+        private readonly IContactService _contactService;
         public ContactController(IUserService userService, IContactService contactService)
         {
             _userService = userService;
@@ -19,8 +19,7 @@ namespace ContactService.Api.Controllers
         [HttpPost]
         public void AddUser(UserDto userDto)
         {
-            Guid guid = Guid.NewGuid();
-            userDto.UserId = guid;
+            userDto.UserId = Guid.NewGuid(); 
             _userService.AddUser(userDto);
         }
         [HttpDelete]
@@ -44,16 +43,12 @@ namespace ContactService.Api.Controllers
         }
 
         [HttpGet]
-        public List<UserDto> GetAllUsersContacts()
-        {
-            List<UserDto> listusers = _userService.GetAllUsersContacts();
-            return listusers;
-        }
+        public List<UserDto> GetAllUsersContacts() => _userService.GetAllUsersContacts();
+
+
         [HttpPost]
-        public List<ContactDto> GetContact(ContactDto contactDto)
-        {
-            return _contactService.GetAllContactsById(contactDto.UserId);
-        }
+        public List<ContactDto> GetContact(ContactDto contactDto) => _contactService.GetAllContactsById(contactDto.UserId);
+
 
         [HttpPost]
         public ReportDto CreateReport(ContactDto contactDto)
