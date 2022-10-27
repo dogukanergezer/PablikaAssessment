@@ -1,4 +1,5 @@
-﻿using ContactService.Business.Abstract;
+﻿using AutoMapper;
+using ContactService.Business.Abstract;
 using ContactService.Data.Contexts;
 using ContactService.Data.UnitOfWork;
 using ContactService.Entity.DTOs;
@@ -9,45 +10,23 @@ namespace ContactService.Business.Concrete
     public class ContactManager : IContactService
     {
         UnitOfWork uow = new UnitOfWork(new ContactServiceContext());
-        public Contact ConvertToContact(ContactDto contactDto)
+        private readonly IMapper _mapper;
+
+        public ContactManager(IMapper mapper)
         {
-            Contact contact = new Contact();
-            contact.UserId = contactDto.UserId;
-            contact.PhoneNumber = contactDto.PhoneNumber;
-            contact.Email = contactDto.Email;
-            contact.Address = contactDto.Address.ToUpper().ToLower();
-
-            return contact;
+            _mapper = mapper;
         }
-        public ContactDto ConvertToContactDto(Contact contact)
-        {
-            ContactDto contactDto = new ContactDto();
-            try
-            {
-
-                contactDto.UserId = contact.UserId;
-                contactDto.PhoneNumber = contact.PhoneNumber;
-                contactDto.Email = contact.Email;
-                contactDto.Address = contact.Address;
-            }
-            catch
-            {
-                contactDto = null;
-            }
-
-
-            return contactDto;
-        }
+       
         public void AddContact(ContactDto contactDto)
         {
-            Contact contact = ConvertToContact(contactDto);
+            var contact = _mapper.Map<Contact>(contactDto);
             uow.ContactRepository.AddContact(contact);
             uow.Save();
         }
 
         public ContactDto GetContactByUserId(Guid userId)
         {
-            ContactDto contactDto = ConvertToContactDto(uow.ContactRepository.GetContactByUserId(userId));
+            var contactDto = _mapper.Map<ContactDto>(uow.ContactRepository.GetContactByUserId(userId));
             return contactDto;
 
         }
@@ -68,9 +47,7 @@ namespace ContactService.Business.Concrete
 
             return contacts;
 
-
         }
-
 
         public void DeleteContact(Guid contactId)
         {
@@ -84,8 +61,6 @@ namespace ContactService.Business.Concrete
             uow.ContactRepository.DeleteContact(contact);
             uow.Save();
         }
-
-
 
         public List<int> PersonPhoneCount(string address)
         {

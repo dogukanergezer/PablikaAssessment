@@ -3,25 +3,22 @@ using ContactService.Data.UnitOfWork;
 using ContactService.Entity.Entities;
 using ContactService.Business.Abstract;
 using ContactService.Entity.DTOs;
+using AutoMapper;
 
 namespace ContactService.Business.Concrete
 {
     public class UserManager : IUserService
     {
         UnitOfWork uow = new UnitOfWork(new ContactServiceContext());
+        private readonly IMapper _mapper;
 
-        public User ConvertToUser(UserDto userDto)
+        public UserManager(IMapper mapper)
         {
-            User user = new User();
-            user.Id = userDto.UserId;
-            user.Name = userDto.Name;
-            user.Surname = userDto.Surname;
-            user.CompanyName = userDto.CompanyName;
-            return user;
+            _mapper = mapper;
         }
         public void AddUser(UserDto userDto)
         {
-            User user = ConvertToUser(userDto);
+            var user = _mapper.Map<User>(userDto);
             uow.UserRepository.AddUser(user);
             uow.Save();
         }

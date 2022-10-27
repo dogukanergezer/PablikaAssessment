@@ -1,4 +1,5 @@
-﻿using ReportService.Business.Abstract;
+﻿using AutoMapper;
+using ReportService.Business.Abstract;
 using ReportService.Data.Contexts;
 using ReportService.Data.Repositories.Concrete.EntityFramework;
 using ReportService.Entity.DTOs;
@@ -8,39 +9,19 @@ namespace ReportService.Business.Concrete
 {
     public class ReportManager : IReportService
     {
+        private readonly IMapper _mapper;
+
+        public ReportManager(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
         ReportRepository reportRepository = new ReportRepository(new ReportServiceContext());
-        public Report ConvertToReport(ReportDto reportDto)
-        {
-            Report report = new Report();
-            report.Id = reportDto.Id;
-            report.ReportName = reportDto.ReportName;
-            report.Location = reportDto.Location.ToUpper().ToLower();
-            report.PersonCount = reportDto.PersonCount;
-            report.PhoneCount = reportDto.PhoneCount;
-            report.RequestedDate = reportDto.RequestedDate;
-            report.status = reportDto.status;
-
-            return report;
-        }
-
-
-        public ReportDto ConvertToDto(Report report)
-        {
-            ReportDto reportDto = new ReportDto();
-            reportDto.Id = report.Id;
-            reportDto.ReportName = report.ReportName;
-            reportDto.PersonCount = report.PersonCount;
-            reportDto.PhoneCount = report.PhoneCount;
-            reportDto.RequestedDate = report.RequestedDate;
-            reportDto.status = report.status;
-
-            return reportDto;
-        }
 
 
         public void AddReport(ReportDto reportDto)
         {
-            Report report = ConvertToReport(reportDto);
+            var report = _mapper.Map<Report>(reportDto);
             reportRepository.AddReport(report);
         }
 

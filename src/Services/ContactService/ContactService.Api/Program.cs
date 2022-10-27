@@ -1,4 +1,5 @@
 using ContactService.Business;
+using ContactService.Entity.AutoMapper.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddBusinessServices();
+builder.Services.AddAutoMapper(typeof(ContactProfile), typeof(UserProfile));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
